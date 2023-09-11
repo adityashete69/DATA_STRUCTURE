@@ -1,0 +1,236 @@
+ADITYA LAXMIKANT SHETE
+Experiment no 6:
+
+Aim: Implementation of Singly Linked List 
+
+Objective : It is used ti implement stacks and queue which are linked needs throughout computer science .To prevent the Collision between the data in the Hash map.we use a singly Linked list 
+
+Theory:
+When we want to work with an unknown number of data values, we use a linked list data structure to organize that data. The linked list is a linear data structure that contains a sequence of elements such that each element links to its next element in the sequence. Each element in a linked list is called "Node"
+Simply a list is a sequence of data, and the linked list is a sequence of data linked with each other.
+In any single linked list, the individual element is called as "Node". Every "Node" contains two fields, data field, and the next field. The data field is used to store actual value of the node and next field is used to store the address of next node in the sequence.
+Algorithm:-
+Inserting a node at the beginning
+Step 1: SET NEW_NODE = PTR
+Step 2: SET PTR = PTR → NEXT
+Step 3: SET NEW_NODE → DATA = VAL
+Step 4: SET NEW_NODE → NEXT = HEAD
+Step 5: SET HEAD = NEW_NODE
+Step 6: EXIT
+
+Inserting a node at the ending
+Step 1: SET NEW_NODE = PTR
+Step 2: SET PTR = PTR - > NEXT
+Step 3: SET NEW_NODE - > DATA = VAL
+Step 4: SET NEW_NODE - > NEXT = NULL
+Step 5: SET PTR = HEAD
+Step 6: Repeat Step 7 while PTR - > NEXT != NULL
+Step 7: SET PTR = PTR - > NEXT
+[END OF LOOP]
+Step 8: SET PTR - > NEXT = NEW_NODE
+Step 9: EXIT
+Delete a Node
+Input: head (pointer to the head of the linked list), data (integer to delete)
+Output: Updated head (if the head changes)
+1. If the list is empty (head is NULL), return head.
+2. If the node to delete is the head, set head to head->next and free the old head.
+3. Initialize a current pointer to head and a previous pointer to NULL.
+4. Traverse the list:
+   a. While current is not NULL and current->data is not equal to data:
+      i. Set previous to current.
+      ii. Set current to current->next.
+   b. If current is NULL, the data was not found, so return head.
+   c. Otherwise, set previous->next to current->next and free current.
+5. Return the updated head.
+Display the List
+Input: head (pointer to the head of the linked list)
+Output: None (prints the elements of the list)
+
+1. Initialize a current pointer to head.
+2. While current is not NULL:
+   a. Print current->data.
+   b. Set current to current->next.
+3. End.
+
+Algorithm: Exit Program
+Input: None
+Output: None
+
+1. Exit the program gracefully.
+
+code:-
+#include <stdio.h>
+#include <stdlib.h>
+
+// Define the structure for a node in the linked list
+struct Node {
+    int data;
+    struct Node* next;
+};
+
+// Function to create a new node
+struct Node* createNode(int data) {
+    struct Node* newNode = (struct Node*)malloc(sizeof(struct Node));
+    if (newNode == NULL) {
+        printf("Memory allocation failed!\n");
+        exit(1);
+    }
+    newNode->data = data;
+    newNode->next = NULL;
+    return newNode;
+}
+
+// Function to insert a node at the beginning of the linked list
+struct Node* insertAtBeginning(struct Node* head, int data) {
+    struct Node* newNode = createNode(data);
+    newNode->next = head;
+    return newNode;
+}
+
+// Function to insert a node at the end of the linked list
+struct Node* insertAtEnd(struct Node* head, int data) {
+    struct Node* newNode = createNode(data);
+    if (head == NULL) {
+        return newNode;
+    }
+    struct Node* current = head;
+    while (current->next != NULL) {
+	current = current->next;
+    }
+    current->next = newNode;
+    return head;
+}
+
+// Function to delete a node with a given value from the linked list
+struct Node* deleteNode(struct Node* head, int data) {
+    if (head == NULL) {
+	printf("List is empty. Nothing to delete.\n");
+	return head;
+    }
+    if (head->data == data) {
+	struct Node* temp = head;
+	head = head->next;
+	free(temp);
+	return head;
+    }
+    struct Node* current = head;
+    while (current->next != NULL && current->next->data != data) {
+	current = current->next;
+    }
+    if (current->next == NULL) {
+	printf("Element %d not found in the list.\n", data);
+	return head;
+    }
+    struct Node* temp = current->next;
+    current->next = current->next->next;
+    free(temp);
+    return head;
+}
+
+// Function to display the linked list
+void displayList(struct Node* head) {
+    struct Node* current = head;
+    printf("Linked List: ");
+    while (current != NULL) {
+        printf("%d -> ", current->data);
+        current = current->next;
+    }
+    printf("NULL\n");
+}
+
+int main() {
+    struct Node* head = NULL;
+    int choice, data;
+
+    while (1) {
+        printf("\nSingly Linked List Operations:\n");
+        printf("1. Display the linked list\n");
+        printf("2. Insert at the beginning\n");
+        printf("3. Insert at the end\n");
+        printf("4. Delete a node\n");
+        printf("5. Exit\n");
+        printf("Enter your choice: ");
+        scanf("%d", &choice);
+
+        switch (choice) {
+        	case 1:
+                displayList(head);
+                break;
+            case 2:
+                printf("Enter data to insert at the beginning: ");
+                scanf("%d", &data);
+                head = insertAtBeginning(head, data);
+                break;
+            case 3:
+                printf("Enter data to insert at the end: ");
+                scanf("%d", &data);
+                head = insertAtEnd(head, data);
+                break;
+            case 4:
+                printf("Enter data to delete: ");
+                scanf("%d", &data);
+                head = deleteNode(head, data);
+                break;
+            case 5:
+                exit(0);
+            default:
+                printf("Invalid choice. Please try again.\n");
+        }
+    }
+
+    return 0;
+}
+OUTPUT:-
+Singly Linked List Operations:
+1. Display the linked list
+2. Insert at the beginning
+3. Insert at the end
+4. Delete a node
+5. Exit
+Enter your choice: 2
+Enter data to insert at the beginning: 10
+
+Singly Linked List Operations:
+1. Display the linked list
+2. Insert at the beginning
+3. Insert at the end
+4. Delete a node
+5. Exit
+Enter your choice: 2
+Enter data to insert at the beginning: 20
+
+Singly Linked List Operations:
+1. Display the linked list
+2. Insert at the beginning
+3. Insert at the end
+4. Delete a node
+5. Exit
+Enter your choice: 2
+Enter data to insert at the beginning: 30
+
+Singly Linked List Operations:
+1. Display the linked list
+2. Insert at the beginning
+3. Insert at the end
+4. Delete a node
+5. Exit
+Enter your choice: 2
+Enter data to insert at the beginning: 40
+
+Singly Linked List Operations:
+1. Display the linked list
+2. Insert at the beginning
+3. Insert at the end
+4. Delete a node
+5. Exit
+Enter your choice: 2
+Enter data to insert at the beginning: 50
+
+Singly Linked List Operations:
+1. Display the linked list
+2. Insert at the beginning
+3. Insert at the end
+4. Delete a node
+5. Exit
+Enter your choice: 1
+Linked List: 50 -> 40 -> 30 -> 20 -> 10 -> NULL
